@@ -1,5 +1,4 @@
 import { StyleProp, TextStyle } from "react-native";
-import { Text } from "react-native";
 import { Pressable } from "react-native";
 import { VcText } from "./vcText";
 interface IProps {

@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 let dialogRef: any = null;
 interface IInput {
     icon?: (color: string) => ReactNode,
-    placeholder?: string,
+    label?: string,
     value?: string,
     callBack: (v: string) => void
 }

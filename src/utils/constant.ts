@@ -82,3 +82,52 @@ export const VcConstant = {
     return styles[styleMap[type || 'default']];
   }
 };
+export const VcApi = {
+  urlBase: "http://crm.vacom.vn",
+  keyStorage: {
+    infoLogin: "INFO_LOGIN",
+    token: "TOKEN",
+    tenant: "TENANT",
+    orgCode: "ORG_CODE",
+    urlBase: "URL_BASE"
+  },
+  api: {
+    window: {
+      dataParam: {
+        windowId: null,
+        menuId: null,
+        quickSearch: "",
+        start: 0,
+        count: 20,
+        continue: null,
+        filterRows: [],
+        filterAdvanced: null,
+        tlbparam: []
+      },
+      post: "/api/app/data-object",
+      postPages: "/api/app/data-object/pages",
+      getById: "/api/app/data-object/by-id/",
+      putById: "/api/app/data-object/",
+      deleteById: "/api/app/data-object/",
+      getConfigByMenuId: "/api/app/window/config-by-menu-id/",
+      postPrint: "/api/app/print-template"
+    },
+    setting: {
+      getCurrentRole: "/api/app/user/current-role",
+      getCurrentInfo: "/api/app/user/current-info",
+      postSaveCurrentInfo: "/api/app/user/save-current-info",
+      postChangePassword: "/api/account/my-profile/change-password",
+      postDeleteLogo: "/api/app/user/current-pic-delete",
+      postUploadLogo: "/api/app/user/upload-pic"
+    },
+    ref: {
+      getUser: "/api/app/user/data-reference",
+      getDepartments: "/api/app/data-object/data-reference?name=Departments&orderby=code&refid=646f28a7163b075e01b935c3&fieldsW=tenantId,orgId",
+      getPositions: "/api/app/data-object/data-reference?name=Positions&orderby=code&refid=646f2bdb163b075e01b935c9&fieldsW=tenantId,orgId",
+      getSoftwareTypes: "/api/app/data-object/data-reference?name=SoftwareTypes&orderby=code&refid=64d5cdecbc2470bc11c2e530",
+    }
+  }
+}
+export const VcLayout = {
+
+}

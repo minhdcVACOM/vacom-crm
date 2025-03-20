@@ -3,9 +3,9 @@ import { AppDialogProvider, useAppDialog } from '@/components/dialog/appDialogCo
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from "react-native"
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -38,15 +38,18 @@ export default function RootLayout() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <AppDialogProvider>
+        {/* <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" /> */}
+        {/* <StatusBar hidden={true} /> */}
         <InitDialog />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="forgotPass" options={{ title: "Quên mật khẩu" }} />
+          <Stack.Screen name="listOrgUnit" options={{ headerShown: false }} />
           <Stack.Screen name="setting" />
-          <Stack.Screen name="pageView" />
+          <Stack.Screen name="pageView" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
       </AppDialogProvider>
-      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }

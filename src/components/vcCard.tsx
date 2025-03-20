@@ -1,4 +1,4 @@
-import { VcConstant } from "@/constants/constant";
+import { VcConstant } from "utils/constant";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 interface IProps {
     children: any;

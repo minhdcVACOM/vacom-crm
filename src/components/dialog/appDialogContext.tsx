@@ -4,7 +4,7 @@ import VcPress from '../vcPress';
 import VcTextInput from '../vcTextInput';
 interface IInput {
   icon?: (color: string) => ReactNode,
-  placeholder?: string,
+  label?: string,
   value?: string,
   callBack: (v: string) => void
 }
@@ -38,8 +38,9 @@ export const AppDialogProvider = ({ children }: any) => {
             <Text style={styles.title}>{dialogOptions.title}</Text>
             {dialogOptions.message && <Text style={styles.message}>{dialogOptions.message}</Text>}
             {dialogOptions.input && <VcTextInput
+              label={dialogOptions.input.label}
               icon={(color) => { if (dialogOptions.input?.icon) return dialogOptions.input?.icon(color) }}
-              placeholder={dialogOptions.input.placeholder}
+              placeholder={`Nhập ${dialogOptions.input.label}`}
               value={textDialog}
               onChangeText={setTextDialog}
             />}

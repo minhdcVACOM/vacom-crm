@@ -1,4 +1,4 @@
-import { VcConstant } from '@/constants/constant';
+import { VcConstant } from '@/utils/constant';
 import { Text, TextStyle, StyleProp } from 'react-native';
 interface IProps {
   type?: 'default' | 'headerLarge' | 'header' | 'subHeader' | 'title' | 'subTitle' | 'subText' | 'error'

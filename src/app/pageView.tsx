@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, BackHandler, SafeAreaView } from 'react-native';
 import Animated, {
     useSharedValue,
     useAnimatedScrollHandler,
@@ -9,13 +9,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
-import { VcConstant } from '@/constants/constant';
+import { VcConstant } from '@/utils/constant';
 import VcPress from '@/components/vcPress';
 import VcCard from '@/components/vcCard';
-
 const HEADER_MAX_HEIGHT = 100;
 const HEADER_MIN_HEIGHT = 60;
-
 const SettingScreen = () => {
     const scrollY = useSharedValue(0);
 
@@ -84,7 +82,6 @@ const SettingScreen = () => {
     }, []);
     return (
         <View style={styles.container}>
-            <StatusBar translucent backgroundColor="transparent" />
             {/* Large Header */}
             <Animated.View style={[styles.largeHeader, largeHeaderStyle]}>
                 <Animated.Text style={[VcConstant.stylesText("header"), largeTitleStyle]}>Tiêu đề</Animated.Text>

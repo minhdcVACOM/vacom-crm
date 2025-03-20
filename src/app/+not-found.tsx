@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import React from 'react';
 import VcPress from '@/components/vcPress';
-import { VcConstant } from '@/constants/constant';
+import { VcConstant } from '@/utils/constant';
 
 export default function NotFoundScreen() {
   const router = useRouter();

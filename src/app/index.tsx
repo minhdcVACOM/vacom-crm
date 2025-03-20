@@ -7,15 +7,17 @@ import VcCard from '@/components/vcCard';
 import VcLink from '@/components/vcLink';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import VcTextInput from '@/components/vcTextInput';
-import { VcConstant } from '@/constants/constant';
+import { VcConstant } from '@/utils/constant';
 import { AppAlert } from '@/components/dialog/appAlert';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import VcCheckBox from '@/components/vcCheckBox';
 
 export default function LoginScreen() {
     const router = useRouter();
     const [accessCode, setAccessCode] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [checked, setChecked] = useState(false);
     return (
         <>
             <View style={styles.bgStyle} />
@@ -26,7 +28,7 @@ export default function LoginScreen() {
                         <VcText type='subHeader' style={[{ color: "#fff" }]}>crm</VcText>
                     </View>
                 </View>
-                <VcCard style={{ borderRadius: 20, borderColor: VcConstant.colors.primary, borderWidth: 5 }} >
+                <VcCard style={{ borderRadius: 20, borderColor: VcConstant.colors.primary, borderWidth: 5, gap: 10 }} >
                     <VcText type='header' style={{ color: VcConstant.colors.primary }}>Đăng nhập</VcText>
                     <VcLink title='http://crm.vacom.vn' textStyle={{ color: VcConstant.colors.purple }}
                         onPress={() =>
@@ -35,24 +37,27 @@ export default function LoginScreen() {
                                     icon: color => <MaterialCommunityIcons name="web" size={20} color={color} />,
                                     callBack: (v) => console.log("input value>>", v),
                                     value: "http://crm.vacom.vn",
-                                    placeholder: "Chọn liên kết dữ liệu"
+                                    label: "Đường link"
                                 }
                             )
                         }
                     />
                     <VcTextInput
+                        label='Mã truy cập'
                         placeholder="Mã truy cập"
                         value={accessCode}
                         onChangeText={setAccessCode}
                         icon={(color) => <FontAwesome5 name="qrcode" size={20} color={color} />}
                     />
                     <VcTextInput
+                        label='Tên truy cập'
                         placeholder="Tên truy cập"
                         value={username}
                         onChangeText={setUsername}
                         icon={(color) => <FontAwesome5 name="user-tie" size={20} color={color} />}
                     />
                     <VcTextInput
+                        label="Mật khẩu"
                         placeholder="Mật khẩu"
                         isPassWord={true}
                         value={password}
@@ -62,10 +67,10 @@ export default function LoginScreen() {
                 </VcCard>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ marginLeft: 8 }}>Nhớ mật khẩu</Text>
-                    </View>
-                    <VcLink title='Quên mật khẩu ?' textStyle={{ color: VcConstant.colors.primary }} />
+                    <VcCheckBox label='Nhớ mật khẩu' checked={checked} onChange={setChecked} />
+                    <VcLink title='Quên mật khẩu ?' textStyle={{ color: VcConstant.colors.primary }}
+                        onPress={() => router.navigate("/forgotPass")}
+                    />
                 </View>
                 <VcPress title='Đăng nhập' skin='primary' onPress={() => router.navigate("/setting")} />
             </View>

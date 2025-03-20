@@ -1,4 +1,4 @@
-import { VcConstant } from "@/constants/constant";
+import { VcConstant } from "@/utils/constant";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ReactNode, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         borderWidth: VcConstant.layout.borderWidth,
         // borderColor: VcConstant.layout.borderColor,
         marginVertical: VcConstant.layout.marginVertical,
-        paddingHorizontal: VcConstant.layout.paddingHorizontal,
+        padding: VcConstant.layout.padding,
         gap: 10,
         backgroundColor: "#fff"
     },
@@ -65,8 +65,14 @@ const styles = StyleSheet.create({
     },
     label: {
         position: "absolute",
-        top: -10,
+        top: -15,
         left: 10,
+        backgroundColor: "#fff",
+        paddingHorizontal: 10,
+        fontWeight: "bold",
+        borderTopLeftRadius: 6,
+        borderBottomLeftRadius: 6,
+        borderTopRightRadius: 20,
         borderWidth: VcConstant.layout.borderWidth,
     }
 })

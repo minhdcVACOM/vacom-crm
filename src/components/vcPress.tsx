@@ -1,4 +1,4 @@
-import { VcConstant } from '@/constants/constant';
+import { VcConstant } from '@/utils/constant';
 import React, { ReactNode } from 'react';
 import { Pressable, Platform, View, StyleSheet, StyleProp, ViewStyle, Text, TextStyle, ActivityIndicator } from 'react-native';
 const borderRadius = 50;
