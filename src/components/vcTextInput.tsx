@@ -1,7 +1,7 @@
 import { VcConstant } from "@/constants/constant";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { ReactNode, useCallback, useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { ReactNode, useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 interface IProgs {
     label?: string;
     disable?: boolean;
@@ -25,6 +25,7 @@ const VcTextInput = ({
     return (
         <View style={[styles.container, { borderColor: color }]}>
             {icon && icon(color)}
+            {label && <Text style={[styles.label, { borderColor: color }]}>{label}</Text>}
             <TextInput
                 style={[styles.input, heightStyle] as any}
                 placeholder={placeholder}
@@ -61,6 +62,12 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1
+    },
+    label: {
+        position: "absolute",
+        top: -10,
+        left: 10,
+        borderWidth: VcConstant.layout.borderWidth,
     }
 })
 

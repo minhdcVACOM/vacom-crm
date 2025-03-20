@@ -14,6 +14,7 @@ export const VcText = ({
   return (
     <Text
       style={[
+        { textAlign: 'center' },
         VcConstant.stylesText(type),
         style,
       ]}

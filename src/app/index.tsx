@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import VcPress from '@/components/vcPress';
 import { VcText } from '@/components/vcText';
@@ -8,6 +8,8 @@ import VcLink from '@/components/vcLink';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import VcTextInput from '@/components/vcTextInput';
 import { VcConstant } from '@/constants/constant';
+import { AppAlert } from '@/components/dialog/appAlert';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function LoginScreen() {
     const router = useRouter();
@@ -15,53 +17,76 @@ export default function LoginScreen() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     return (
-        <View style={styles.container}>
-            <View style={{ justifyContent: 'center', gap: 10, flex: 1 }}>
-                <VcText type='headerLarge'>Welcome!</VcText>
-                <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
-                    <VcText type='headerLarge' style={{ color: "black" }}>VACOM</VcText>
-                    <VcText type='subHeader' style={[{ color: VcConstant.colors.primary }]}>crm</VcText>
+        <>
+            <View style={styles.bgStyle} />
+            <View style={styles.container}>
+                <View style={{ justifyContent: 'center', flex: 1 }}>
+                    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                        <VcText type='headerLarge' style={{ color: "#fff", fontSize: 50 }}>VACOM</VcText>
+                        <VcText type='subHeader' style={[{ color: "#fff" }]}>crm</VcText>
+                    </View>
                 </View>
-                <VcText type='subText'>Gìn giữ sự hài lòng</VcText>
-            </View>
-            <VcCard style={{ borderRadius: 20 }}>
-                <VcLink title='http://crm.vacom.vn' textStyle={{ color: VcConstant.colors.purple }} />
-                <VcTextInput
-                    placeholder="Mã truy cập"
-                    value={accessCode}
-                    onChangeText={setAccessCode}
-                    icon={(color) => <FontAwesome5 name="qrcode" size={20} color={color} />}
-                />
-                <VcTextInput
-                    placeholder="Tên truy cập"
-                    value={username}
-                    onChangeText={setUsername}
-                    icon={(color) => <FontAwesome5 name="user-tie" size={20} color={color} />}
-                />
-                <VcTextInput
-                    placeholder="Mật khẩu"
-                    isPassWord={true}
-                    value={password}
-                    onChangeText={setPassword}
-                    icon={(color) => <FontAwesome5 name="lock" size={20} color={color} />}
-                />
-            </VcCard>
+                <VcCard style={{ borderRadius: 20, borderColor: VcConstant.colors.primary, borderWidth: 5 }} >
+                    <VcText type='header' style={{ color: VcConstant.colors.primary }}>Đăng nhập</VcText>
+                    <VcLink title='http://crm.vacom.vn' textStyle={{ color: VcConstant.colors.purple }}
+                        onPress={() =>
+                            AppAlert.alert('Thông báo', 'Nội dung thông báo...', ["Xác nhận"],
+                                {
+                                    icon: color => <MaterialCommunityIcons name="web" size={20} color={color} />,
+                                    callBack: (v) => console.log("input value>>", v),
+                                    value: "http://crm.vacom.vn",
+                                    placeholder: "Chọn liên kết dữ liệu"
+                                }
+                            )
+                        }
+                    />
+                    <VcTextInput
+                        placeholder="Mã truy cập"
+                        value={accessCode}
+                        onChangeText={setAccessCode}
+                        icon={(color) => <FontAwesome5 name="qrcode" size={20} color={color} />}
+                    />
+                    <VcTextInput
+                        placeholder="Tên truy cập"
+                        value={username}
+                        onChangeText={setUsername}
+                        icon={(color) => <FontAwesome5 name="user-tie" size={20} color={color} />}
+                    />
+                    <VcTextInput
+                        placeholder="Mật khẩu"
+                        isPassWord={true}
+                        value={password}
+                        onChangeText={setPassword}
+                        icon={(color) => <FontAwesome5 name="lock" size={20} color={color} />}
+                    />
+                </VcCard>
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ marginLeft: 8 }}>Nhớ mật khẩu</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ marginLeft: 8 }}>Nhớ mật khẩu</Text>
+                    </View>
+                    <VcLink title='Quên mật khẩu ?' textStyle={{ color: VcConstant.colors.primary }} />
                 </View>
-                <VcLink title='Quên mật khẩu ?' textStyle={{ color: VcConstant.colors.primary }} />
+                <VcPress title='Đăng nhập' skin='primary' onPress={() => router.navigate("/setting")} />
             </View>
-            <VcPress title='Đăng nhập' skin='primary' onPress={() => router.navigate("/setting")} />
-        </View>
+        </>
     );
 }
 
 const styles = StyleSheet.create({
+    bgStyle: {
+        position: 'absolute',
+        height: "75%",
+        width: "100%",
+        backgroundColor: VcConstant.colors.primary,
+        top: 0,
+        borderBottomLeftRadius: 100,
+        borderBottomRightRadius: 100,
+    },
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: "rgba(255,255,255,0.2)"
     },
     txtNameApp: {
         color: '#E53935',
