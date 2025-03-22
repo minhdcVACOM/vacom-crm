@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import VcPress from '@/components/vcPress';
@@ -8,16 +8,62 @@ import VcLink from '@/components/vcLink';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import VcTextInput from '@/components/vcTextInput';
 import { VcConstant } from '@/utils/constant';
-import { AppAlert } from '@/components/dialog/appAlert';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import VcCheckBox from '@/components/vcCheckBox';
-
+import { useLogin } from '@/utils/hooks/useLogin';
+import { apiLogin } from '@/utils/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { IVcStore } from '@/redux/vcStore';
+import { setUserInfo } from '@/redux/vcSlice';
+import { Formik } from 'formik';
+import { VcSchema } from '@/utils/vcSchema';
+import { usePopup } from '@/components/dialog/popupProvider';
+import { useToast } from '@/components/dialog/useToast';
+interface IForm {
+    tenant: string,
+    username: string,
+    password: string,
+    remember: boolean
+}
 export default function LoginScreen() {
     const router = useRouter();
-    const [accessCode, setAccessCode] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [checked, setChecked] = useState(false);
+    const { showToast } = useToast();
+    const userInfo = useSelector((state: IVcStore) => state.app.userInfo);
+    const dispatch = useDispatch();
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [linkApi, setLinkApi] = useState<string>("");
+    const [initialValues, setInitialValues] = useState<IForm>({ tenant: "", username: "", password: "", remember: false });
+    const { getInfoLogin, getLinkApi, saveLinkApi } = useLogin();
+    useEffect(() => {
+        getInfoLogin((res: IForm) => { if (res) setInitialValues(res) });
+        getLinkApi((urlBase: string) => setLinkApi(urlBase));
+        showToast("message is here...", { type: "error" });
+    }, []);
+
+    const { showPopup } = usePopup();
+
+    const editLinkApi = () => {
+        showPopup({
+            title: 'Thông báo',
+            message: 'Bạn có chắc không?',
+            showInput: true,
+            inputDefaultValue: linkApi,
+            onConfirm: (text) => {
+                setLinkApi(text);
+                saveLinkApi(text);
+            }
+        });
+    }
+    const login = (values: IForm) => {
+        apiLogin({
+            ...values,
+            setLoading: setLoading,
+            callBack: (res: ILogin) => {
+                if (res) dispatch(setUserInfo({ tenant: res.tenant, username: res.username, token: res.token }));
+                router.navigate("/listOrgUnit");
+            }
+        })
+    }
     return (
         <>
             <View style={styles.bgStyle} />
@@ -28,51 +74,63 @@ export default function LoginScreen() {
                         <VcText type='subHeader' style={[{ color: "#fff" }]}>crm</VcText>
                     </View>
                 </View>
-                <VcCard style={{ borderRadius: 20, borderColor: VcConstant.colors.primary, borderWidth: 5, gap: 10 }} >
-                    <VcText type='header' style={{ color: VcConstant.colors.primary }}>Đăng nhập</VcText>
-                    <VcLink title='http://crm.vacom.vn' textStyle={{ color: VcConstant.colors.purple }}
-                        onPress={() =>
-                            AppAlert.alert('Thông báo', 'Nội dung thông báo...', ["Xác nhận"],
-                                {
-                                    icon: color => <MaterialCommunityIcons name="web" size={20} color={color} />,
-                                    callBack: (v) => console.log("input value>>", v),
-                                    value: "http://crm.vacom.vn",
-                                    label: "Đường link"
-                                }
-                            )
-                        }
-                    />
-                    <VcTextInput
-                        label='Mã truy cập'
-                        placeholder="Mã truy cập"
-                        value={accessCode}
-                        onChangeText={setAccessCode}
-                        icon={(color) => <FontAwesome5 name="qrcode" size={20} color={color} />}
-                    />
-                    <VcTextInput
-                        label='Tên truy cập'
-                        placeholder="Tên truy cập"
-                        value={username}
-                        onChangeText={setUsername}
-                        icon={(color) => <FontAwesome5 name="user-tie" size={20} color={color} />}
-                    />
-                    <VcTextInput
-                        label="Mật khẩu"
-                        placeholder="Mật khẩu"
-                        isPassWord={true}
-                        value={password}
-                        onChangeText={setPassword}
-                        icon={(color) => <FontAwesome5 name="lock" size={20} color={color} />}
-                    />
-                </VcCard>
+                <Formik
+                    enableReinitialize={true}
+                    initialValues={initialValues}
+                    onSubmit={login}
+                    validationSchema={VcSchema.login}
+                >
+                    {({ handleChange, handleBlur, handleSubmit, values, errors, setFieldValue }) => (
+                        <>
+                            <VcCard style={{ borderRadius: 20, borderColor: VcConstant.colors.primary, borderWidth: 5, gap: 10 }} >
+                                <VcText type='header' style={{ color: VcConstant.colors.primary }}>Đăng nhập</VcText>
+                                <VcLink title={linkApi} textStyle={{ color: VcConstant.colors.purple }}
+                                    onPress={editLinkApi}
+                                />
+                                <VcTextInput
+                                    label='Mã truy cập'
+                                    placeholder="Mã truy cập"
+                                    onBlur={handleBlur('tenant')}
+                                    value={values.tenant}
+                                    onChangeText={handleChange('tenant')}
+                                    textError={errors.tenant}
+                                    icon={(color) => <FontAwesome5 name="qrcode" size={20} color={color} />}
+                                />
+                                <VcTextInput
+                                    label='Tên truy cập'
+                                    placeholder="Tên truy cập"
+                                    onBlur={handleBlur('username')}
+                                    value={values.username}
+                                    onChangeText={handleChange('username')}
+                                    textError={errors.username}
+                                    icon={(color) => <FontAwesome5 name="user-tie" size={20} color={color} />}
+                                />
+                                <VcTextInput
+                                    label="Mật khẩu"
+                                    placeholder="Mật khẩu"
+                                    isPassWord={true}
+                                    onBlur={handleBlur('password')}
+                                    value={values.password}
+                                    onChangeText={handleChange('password')}
+                                    textError={errors.password}
+                                    icon={(color) => <FontAwesome5 name="lock" size={20} color={color} />}
+                                />
+                            </VcCard>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <VcCheckBox label='Nhớ mật khẩu' checked={checked} onChange={setChecked} />
-                    <VcLink title='Quên mật khẩu ?' textStyle={{ color: VcConstant.colors.primary }}
-                        onPress={() => router.navigate("/forgotPass")}
-                    />
-                </View>
-                <VcPress title='Đăng nhập' skin='primary' onPress={() => router.navigate("/setting")} />
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <VcCheckBox label='Nhớ mật khẩu'
+                                    checked={values.remember}
+                                    onChange={(checked) => setFieldValue("remember", checked)}
+                                    isSwitch={true}
+                                />
+                                <VcLink title='Quên mật khẩu ?' textStyle={{ color: VcConstant.colors.primary }}
+                                    onPress={() => router.navigate("/forgotPass")}
+                                />
+                            </View>
+                            <VcPress title='Đăng nhập' skin='primary' onPress={handleSubmit} loading={loading} />
+                        </>
+                    )}
+                </Formik>
             </View>
         </>
     );

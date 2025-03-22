@@ -1,3 +1,4 @@
+import VcPress from "@/components/vcPress";
 import React from "react";
 import { Text, View } from "react-native";
 

@@ -10,9 +10,9 @@ export const VcSchema = {
     login: Yup.object().shape({
         tenant: Yup.string()
             .required('Phải có Mã truy cập'),
-        userName: Yup.string()
+        username: Yup.string()
             .required('Phải có Tên truy cập'),
-        passWord: Yup.string()
+        password: Yup.string()
             .required('Phải vào mật khẩu'),
     }),
     accountName: Yup.object().shape({

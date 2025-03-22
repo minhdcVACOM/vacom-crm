@@ -1,43 +1,14 @@
 import axios from "axios";
 import { Helper } from "./helper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { VcApi } from "./constant";
-
+import { useLogin } from "./hooks/useLogin";
+const { getLinkApi, getToken, getTenant, getOrdCode } = useLogin();
 const vcAxios = axios.create(
     // { baseURL: VcApi.urlBase }
 );
-export const getBaseUrl = async () => {
-    try {
-        return await AsyncStorage.getItem(VcApi.keyStorage.urlBase);
-    } catch (error) {
-        return VcApi.urlBase;
-    }
-}
-const getTenant = async () => {
-    try {
-        return await AsyncStorage.getItem(VcApi.keyStorage.tenant);
-    } catch (error) {
-        return null;
-    }
-}
-const getToken = async () => {
-    try {
-        return await AsyncStorage.getItem(VcApi.keyStorage.token);
-    } catch (error) {
-        return null;
-    }
-}
-const getOrdCode = async () => {
-    try {
-        return await AsyncStorage.getItem(VcApi.keyStorage.orgCode);
-    } catch (error) {
-        return null;
-    }
-}
 // Add a request interceptor
 vcAxios.interceptors.request.use(async (config) => {
     // Do something before request is sent
-    const baseURL = await getBaseUrl();
+    const baseURL = await getLinkApi();
     if (baseURL) config.baseURL = baseURL;
     const token = await getToken();
     if (token) config.headers["Authorization"] = `Bearer ${token}`;

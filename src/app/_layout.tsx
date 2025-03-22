@@ -1,24 +1,15 @@
-import { setDialogRef } from '@/components/dialog/appAlert';
-import { AppDialogProvider, useAppDialog } from '@/components/dialog/appDialogContext';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from "react-native"
+import { RootSiblingParent } from 'react-native-root-siblings';
+import { Provider } from 'react-redux';
+import { VcStore } from '@/redux/vcStore';
+import { PopupProvider } from '@/components/dialog/popupProvider';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
-const InitDialog = () => {
-  const dialog = useAppDialog();
-
-  useEffect(() => {
-    setDialogRef(dialog);
-  }, [dialog]);
-
-  return null;
-};
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -36,20 +27,23 @@ export default function RootLayout() {
   }
 
   return (
+
     <SafeAreaView style={{ flex: 1 }}>
-      <AppDialogProvider>
-        {/* <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" /> */}
-        {/* <StatusBar hidden={true} /> */}
-        <InitDialog />
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="forgotPass" options={{ title: "Quên mật khẩu" }} />
-          <Stack.Screen name="listOrgUnit" options={{ headerShown: false }} />
-          <Stack.Screen name="setting" />
-          <Stack.Screen name="pageView" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </AppDialogProvider>
+      <RootSiblingParent>
+        <PopupProvider>
+          <Provider store={VcStore}>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+              <Stack.Screen name="forgotPass" options={{ title: "Quên mật khẩu" }} />
+              <Stack.Screen name="listOrgUnit" />
+              <Stack.Screen name="setting" />
+              <Stack.Screen name="pageView" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </Provider>
+        </PopupProvider>
+      </RootSiblingParent>
     </SafeAreaView>
   );
 }

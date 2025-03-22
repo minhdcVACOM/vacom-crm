@@ -1,4 +1,4 @@
-import Toast from "react-native-root-toast";
+import { showToast } from "@/components/dialog/vcToast";
 import { VcConstant } from "./constant";
 export const Helper = {
     getError: (error: any) => {
@@ -16,9 +16,8 @@ export const Helper = {
         return e;
     },
     toastShow: (msg: string, error?: boolean) => {
-        Toast.show(msg, {
-            backgroundColor: (error ? VcConstant.colors.primary : VcConstant.colors.black),
-            position: Toast.positions.TOP
+        showToast(msg, {
+            backgroundColor: (error ? VcConstant.colors.yellow : VcConstant.colors.black)
         });
     },
     showError: (error: IError) => {

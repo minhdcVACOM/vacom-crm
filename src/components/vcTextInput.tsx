@@ -2,6 +2,9 @@ import { VcConstant } from "@/utils/constant";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ReactNode, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
+import AntDesign from '@expo/vector-icons/AntDesign';
+
+import { showPopup } from "./dialog/vcPopup";
 interface IProgs {
     label?: string;
     disable?: boolean;
@@ -25,7 +28,10 @@ const VcTextInput = ({
     return (
         <View style={[styles.container, { borderColor: color }]}>
             {icon && icon(color)}
-            {label && <Text style={[styles.label, { borderColor: color }]}>{label}</Text>}
+            {label && <Text style={[styles.label, { borderColor: color }]}>
+                {label}
+                {textError && <Text style={[styles.txtError, { color: color }]}> {textError}</Text>}
+            </Text>}
             <TextInput
                 style={[styles.input, heightStyle] as any}
                 placeholder={placeholder}
@@ -44,7 +50,8 @@ const VcTextInput = ({
                     name={showPass ? "eye" : "eye-slash"} size={20}
                     color={color}
                     onPress={() => setShowPass(!showPass)}
-                />}
+                />
+            }
         </View>
     );
 }
@@ -54,9 +61,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: VcConstant.layout.borderRadius,
         borderWidth: VcConstant.layout.borderWidth,
-        // borderColor: VcConstant.layout.borderColor,
         marginVertical: VcConstant.layout.marginVertical,
-        padding: VcConstant.layout.padding,
+        paddingHorizontal: 10,
+        paddingTop: 10,
+        paddingBottom: 5,
         gap: 10,
         backgroundColor: "#fff"
     },
@@ -69,11 +77,14 @@ const styles = StyleSheet.create({
         left: 10,
         backgroundColor: "#fff",
         paddingHorizontal: 10,
-        fontWeight: "bold",
         borderTopLeftRadius: 6,
         borderBottomLeftRadius: 6,
         borderTopRightRadius: 20,
         borderWidth: VcConstant.layout.borderWidth,
+    },
+    txtError: {
+        fontSize: 10,
+        color: VcConstant.colors.gray
     }
 })
 

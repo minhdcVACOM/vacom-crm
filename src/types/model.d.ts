@@ -26,9 +26,11 @@ declare global {
     }
     interface ILogin {
         tenantId: string;
-        tenantName: string;
+        tenant: string;
         username: string;
+        password: string;
         token: string;
         tokenType: string;
+        remember: boolean;
     }
 }

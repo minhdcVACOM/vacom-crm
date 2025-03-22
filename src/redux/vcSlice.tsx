@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const VcSlice = createSlice({
     name: "app",
     initialState: {
-        logo: null
+        logo: null,
+        userInfo: null
     },
     reducers: {
         setLogo: (state, action) => {
@@ -10,8 +11,11 @@ const VcSlice = createSlice({
                 state.logo = action.payload;
             else
                 state.logo = null;
+        },
+        setUserInfo: (state, action) => {
+            state.userInfo = action.payload;
         }
     }
 });
-export const { setLogo } = VcSlice.actions;
+export const { setLogo, setUserInfo } = VcSlice.actions;
 export default VcSlice.reducer;

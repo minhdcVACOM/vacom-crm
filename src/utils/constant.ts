@@ -53,6 +53,10 @@ export const VcConstant = {
     yellow: "#f39c12",
     purple: "#967aa1",
     gray: "#a9a9a9",
+    success: "#4CAF50",
+    error: "#F44336",
+    warning: "#FF9800",
+    info: "#2196F3"
   },
   layout: {
     borderRadius: 6,
@@ -92,6 +96,10 @@ export const VcApi = {
     urlBase: "URL_BASE"
   },
   api: {
+    login: {
+      getTenantByName: "/api/abp/multi-tenancy/tenants/by-name/",
+      postToken: "/connect/token"
+    },
     window: {
       dataParam: {
         windowId: null,

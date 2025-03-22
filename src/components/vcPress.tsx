@@ -23,7 +23,7 @@ const VcPress = ({
     return (
         <View style={[{ borderRadius: borderRadius, overflow: 'hidden' }, style]}>
             <Pressable
-                onPress={onPress}
+                onPress={() => { if (!loading && onPress) onPress(); }}
                 android_ripple={androidRipple ? { color: 'rgba(51,51,51,0.1)' } : null}
                 style={({ pressed }) => [
                     styles.pressStyle,
