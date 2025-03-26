@@ -15,7 +15,13 @@ export const getApi = async (params: IParams) => {
     const { link, callBack, setLoading, config, callError } = params;
     if (setLoading) setLoading(true);
     return await vcAxios.get(link, config)
-        .then((res: any) => callBack && callBack(res))
+        .then((res: any) => {
+            if (res.error) {
+                Helper.showError(res.error);
+                return;
+            }
+            callBack && callBack(res)
+        })
         .catch(error => {
             if (callError) callError(error)
             Helper.toastShow(JSON.stringify(error), true);
@@ -26,7 +32,13 @@ export const postApi = async (params: IParams) => {
     const { link, data, callBack, setLoading, config, callError } = params;
     if (setLoading) setLoading(true);
     return await vcAxios.post(link, data, config)
-        .then((res: any) => callBack && callBack(res))
+        .then((res: any) => {
+            if (res.error) {
+                Helper.showError(res.error);
+                return;
+            }
+            callBack && callBack(res)
+        })
         .catch(error => {
             if (callError) callError(error)
             Helper.toastShow(JSON.stringify(error), true);
@@ -37,7 +49,13 @@ export const putApi = async (params: IParams) => {
     const { link, data, callBack, setLoading, config, callError } = params;
     if (setLoading) setLoading(true);
     return await vcAxios.put(link, data, config)
-        .then((res: any) => callBack && callBack(res))
+        .then((res: any) => {
+            if (res.error) {
+                Helper.showError(res.error);
+                return;
+            }
+            callBack && callBack(res)
+        })
         .catch(error => {
             if (callError) callError(error)
             Helper.toastShow(JSON.stringify(error), true);
@@ -48,7 +66,13 @@ export const deleteApi = async (params: IParams) => {
     const { link, callBack, setLoading, config, callError } = params;
     if (setLoading) setLoading(true);
     return await vcAxios.delete(link, config)
-        .then((res: any) => callBack && callBack(res))
+        .then((res: any) => {
+            if (res.error) {
+                Helper.showError(res.error);
+                return;
+            }
+            callBack && callBack(res)
+        })
         .catch(error => {
             if (callError) callError(error)
             Helper.toastShow(JSON.stringify(error), true);

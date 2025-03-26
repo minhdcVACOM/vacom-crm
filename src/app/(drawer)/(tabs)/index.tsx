@@ -1,11 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const ReportScreen = () => {
+const HomeTab = () => {
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>ReportScreen</Text>
+            <Text>HomeTab</Text>
         </View>
     );
 }
-export default ReportScreen;
+export default HomeTab;

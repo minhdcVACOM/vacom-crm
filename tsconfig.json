@@ -11,6 +11,7 @@
       "modals/*": ["src/modals/*"],
       "constants/*": ["src/constants/*"],
       "redux/*": ["src/redux/*"],
+      "modalViews/*": ["src/modalViews/*"],
     }
   },
   "include": [

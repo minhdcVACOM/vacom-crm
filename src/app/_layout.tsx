@@ -7,7 +7,18 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 import { VcStore } from '@/redux/vcStore';
 import { PopupProvider } from '@/components/dialog/popupProvider';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+const stackScreens = {
+  index: { headerShown: false },
+  login: { headerShown: false },
+  '(drawer)': { headerShown: false },
+  forgotPass: { headerShown: false },
+  listOrgUnit: { headerShown: false },
+  setting: { headerShown: false },
+  pageView: { headerShown: false },
+  '+not-found': { headerShown: false },
+} as const;
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -27,23 +38,33 @@ export default function RootLayout() {
   }
 
   return (
-
-    <SafeAreaView style={{ flex: 1 }}>
-      <RootSiblingParent>
-        <PopupProvider>
-          <Provider store={VcStore}>
-            <Stack>
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-              <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-              <Stack.Screen name="forgotPass" options={{ title: "Quên mật khẩu" }} />
-              <Stack.Screen name="listOrgUnit" />
-              <Stack.Screen name="setting" />
-              <Stack.Screen name="pageView" options={{ headerShown: false }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
-          </Provider>
-        </PopupProvider>
-      </RootSiblingParent>
-    </SafeAreaView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <RootSiblingParent>
+          <PopupProvider>
+            <Provider store={VcStore}>
+              <Stack
+                screenOptions={({ route, navigation }: any) => ({
+                  gestureEnabled: true,
+                  gestureDirection: 'horizontal',
+                  // animation: navigation.getState().type === 'pop'
+                  //   ? 'slide_from_left'
+                  //   : 'slide_from_right',
+                  navigationBarHidden: true,
+                })}
+              >
+                {Object.entries(stackScreens).map(([name, options]) => (
+                  <Stack.Screen
+                    key={name}
+                    name={name}
+                    options={options}
+                  />
+                ))}
+              </Stack>
+            </Provider>
+          </PopupProvider>
+        </RootSiblingParent>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }

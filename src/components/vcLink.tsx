@@ -12,7 +12,7 @@ const VcLink = ({ title, onPress, textStyle }: IProps) => {
         <Pressable
             style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, padding: 10 }]}
             onPress={onPress}>
-            <VcText style={[{ textDecorationLine: "underline", fontWeight: "bold", textAlign: "center" }, textStyle]}>{title}</VcText>
+            <VcText style={[{ textDecorationLine: "underline", fontWeight: "bold", textAlign: "center" }, textStyle]} text={title} />
         </Pressable>
     );
 }

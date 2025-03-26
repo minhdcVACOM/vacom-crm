@@ -1,10 +1,8 @@
 import { VcConstant } from "@/utils/constant";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ReactNode, useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import AntDesign from '@expo/vector-icons/AntDesign';
-
-import { showPopup } from "./dialog/vcPopup";
+import { KeyboardTypeOptions } from "react-native";
+import { StyleProp, StyleSheet, Text, TextInput, View, ViewStyle } from "react-native";
 interface IProgs {
     label?: string;
     disable?: boolean;
@@ -16,17 +14,20 @@ interface IProgs {
     icon?: (color: string) => ReactNode;
     placeholder?: string;
     isPassWord?: boolean;
+    keyboardType?: KeyboardTypeOptions;
+    autoCapitalize?: "none" | "sentences" | "words" | "characters";
+    style?: StyleProp<ViewStyle>
 }
 const VcTextInput = ({
     value, onBlur, onChangeText, icon, placeholder,
-    isPassWord, label, disable, textError, multiline
+    isPassWord, keyboardType, autoCapitalize, label, disable, textError, multiline, style
 }: IProgs) => {
     const [isFocus, setIsFocus] = useState(false);
     const [showPass, setShowPass] = useState(false);
     const heightStyle = multiline ? { height: 80, textAlignVertical: "top" } : null;
     const color = disable ? VcConstant.colors.gray : (isFocus ? VcConstant.colors.primary : VcConstant.colors.gray);
     return (
-        <View style={[styles.container, { borderColor: color }]}>
+        <View style={[styles.container, { borderColor: color, backgroundColor: disable ? VcConstant.colors.grayLight : "#fff" }, style]}>
             {icon && icon(color)}
             {label && <Text style={[styles.label, { borderColor: color }]}>
                 {label}
@@ -44,6 +45,8 @@ const VcTextInput = ({
                 }}
                 value={value}
                 onChangeText={onChangeText}
+                keyboardType={keyboardType}
+                autoCapitalize={autoCapitalize}
             />
             {isPassWord &&
                 <FontAwesome5
@@ -63,13 +66,12 @@ const styles = StyleSheet.create({
         borderWidth: VcConstant.layout.borderWidth,
         marginVertical: VcConstant.layout.marginVertical,
         paddingHorizontal: 10,
-        paddingTop: 10,
-        paddingBottom: 5,
-        gap: 10,
-        backgroundColor: "#fff"
+        paddingTop: 5,
+        gap: 10
     },
     input: {
-        flex: 1
+        flex: 1,
+        height: 40
     },
     label: {
         position: "absolute",

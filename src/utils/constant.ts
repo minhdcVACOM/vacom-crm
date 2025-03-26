@@ -50,13 +50,16 @@ export const VcConstant = {
     black: '#000',
     blue: "#3498db",
     green: "#2ecc71",
+    orange: "#FF8C00",
     yellow: "#f39c12",
     purple: "#967aa1",
     gray: "#a9a9a9",
+    grayLight: "#d3d3d3",
     success: "#4CAF50",
     error: "#F44336",
     warning: "#FF9800",
-    info: "#2196F3"
+    info: "#2196F3",
+    question: "#9C27B0"
   },
   layout: {
     borderRadius: 6,
@@ -98,7 +101,11 @@ export const VcApi = {
   api: {
     login: {
       getTenantByName: "/api/abp/multi-tenancy/tenants/by-name/",
-      postToken: "/connect/token"
+      postToken: "/connect/token",
+      getListOrgUnit: "/api/app/org-unit/select-to-login",
+      getUserPic: "/api/app/user/user-pic",
+      postSendOtp: "/api/app/user/request-otp-code",
+      postRecoverPass: "/api/app/user/recover-pass"
     },
     window: {
       dataParam: {

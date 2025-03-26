@@ -3,11 +3,13 @@ import { PopupContent } from './popupContent';
 
 interface PopupContentProps {
     title?: string;
-    message: string;
+    message?: string;
     backgroundColor?: string;
     textColor?: string;
-    iconType?: 'success' | 'warning' | 'none';
+    iconType?: 'success' | 'warning' | 'error' | 'info' | 'question' | 'none';
     confirmText?: string;
+    cancelText?: string;
+    showCancel?: boolean;
     inputLabel?: string;
     inputPlaceholder?: string;
     inputDefaultValue?: string;

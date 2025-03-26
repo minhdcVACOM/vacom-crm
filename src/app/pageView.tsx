@@ -8,7 +8,7 @@ import Animated, {
     interpolateColor,
 } from 'react-native-reanimated';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useRouter } from 'expo-router';
+import { router, useRouter } from 'expo-router';
 import { VcConstant } from '@/utils/constant';
 import VcPress from '@/components/vcPress';
 import VcCard from '@/components/vcCard';
@@ -68,7 +68,6 @@ const SettingScreen = () => {
             opacity
         };
     });
-    const router = useRouter();
     useEffect(() => {
         const backAction = () => {
             router.back();

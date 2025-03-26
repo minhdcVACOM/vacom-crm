@@ -8,6 +8,7 @@ interface IProgs {
     onPress?: () => void;
     androidRipple?: boolean;
     style?: StyleProp<ViewStyle>;
+    pressStyle?: StyleProp<ViewStyle>;
     skin?: 'default' | 'primary' | 'secondary',
     loading?: boolean;
 }
@@ -17,6 +18,7 @@ const VcPress = ({
     onPress,
     androidRipple = true,
     style,
+    pressStyle,
     skin = "default",
     loading
 }: IProgs) => {
@@ -28,11 +30,11 @@ const VcPress = ({
                 style={({ pressed }) => [
                     styles.pressStyle,
                     styles[skin],
-                    style,
+                    pressStyle,
                     Platform.OS === 'ios' && pressed ? styles.pressed : null
                 ]}
             >
-                {title && <Text style={[{ textAlign: "center", fontSize: 16, fontWeight: "bold" }, styles[`${skin}Text`] as StyleProp<TextStyle>]}>{title}</Text>}
+                {title && <Text style={[{ textAlign: "center", fontSize: 16 }, styles[`${skin}Text`] as StyleProp<TextStyle>]}>{title}</Text>}
                 {children}
                 {loading && <ActivityIndicator style={styles.loading} size={"large"} color={(styles[`${skin}Text`] as TextStyle)?.color} />}
             </Pressable>

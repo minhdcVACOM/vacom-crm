@@ -11,7 +11,7 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "android:release": "cd android && gradlew assembleRelease && cd .. && adb install -r android/app/build/outputs/apk/release/app-release.apk"
+    "android:release": "cd android && gradlew assembleRelease && cd .. && explorer android\\app\\build\\outputs\\apk\\release"
   },
   "jest": {
     "preset": "jest-expo"
@@ -29,6 +29,7 @@
     "expo-constants": "~17.0.8",
     "expo-font": "~13.0.4",
     "expo-haptics": "~14.0.1",
+    "expo-image-picker": "^16.0.6",
     "expo-router": "~4.0.19",
     "expo-splash-screen": "~0.29.22",
     "expo-status-bar": "~2.0.1",
@@ -39,6 +40,7 @@
     "react-dom": "18.3.1",
     "react-native": "0.76.7",
     "react-native-gesture-handler": "~2.20.2",
+    "react-native-otp-textinput": "^1.1.6",
     "react-native-popup-menu": "^0.17.0",
     "react-native-reanimated": "~3.16.1",
     "react-native-root-toast": "^3.6.0",

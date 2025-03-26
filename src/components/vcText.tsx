@@ -3,21 +3,21 @@ import { Text, TextStyle, StyleProp } from 'react-native';
 interface IProps {
   type?: 'default' | 'headerLarge' | 'header' | 'subHeader' | 'title' | 'subTitle' | 'subText' | 'error'
   style?: StyleProp<TextStyle>,
-  children: string
+  text: string
 };
 
 export const VcText = ({
   style,
   type,
-  children,
+  text,
 }: IProps) => {
   return (
     <Text
       style={[
-        { textAlign: 'center' },
+        // { textAlign: 'center' },
         VcConstant.stylesText(type),
         style,
       ]}
-    >{children}</Text>
+    >{text}</Text>
   );
 }
