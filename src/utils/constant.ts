@@ -48,6 +48,7 @@ export const VcConstant = {
     secondary: '#f5f5f5',
     white: '#fff',
     black: '#000',
+    red: '#E53935',
     blue: "#3498db",
     green: "#2ecc71",
     orange: "#FF8C00",

@@ -17,7 +17,7 @@ export const Helper = {
     },
     toastShow: (msg: string, error?: boolean) => {
         showToast(msg, {
-            backgroundColor: (error ? VcConstant.colors.yellow : VcConstant.colors.black)
+            backgroundColor: error ? VcConstant.colors.warning : VcConstant.colors.success
         });
     },
     showError: (error: IError) => {

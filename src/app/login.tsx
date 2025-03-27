@@ -17,6 +17,7 @@ import { setUserInfo } from '@/redux/vcSlice';
 import { Formik } from 'formik';
 import { VcSchema } from '@/utils/vcSchema';
 import { usePopup } from '@/components/dialog/popupProvider';
+import LoadingOverlay from '@/components/loadingOverlay';
 interface IForm {
     tenant: string,
     username: string,
@@ -140,6 +141,7 @@ export default function LoginScreen() {
                     )}
                 </Formik>
             </View>
+            {loading && <LoadingOverlay animating={false} />}
         </>
     );
 }

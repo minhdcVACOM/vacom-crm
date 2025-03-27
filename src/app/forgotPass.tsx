@@ -16,6 +16,7 @@ import VcPress from '@/components/vcPress';
 import LoadingOverlay from '@/components/loadingOverlay';
 import { FontAwesome5 } from '@expo/vector-icons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { VcText } from '@/components/vcText';
 
 interface IParams {
     tenant?: string
@@ -37,13 +38,13 @@ const ForgotPass = () => {
         } else {
             sendOtp(values.tenant, values.email);
         }
-    }, [])
+    }, [typeSubmit])
 
     const sendOtp = useCallback((tenant: string, email: string) => {
         postApi({
             link: VcApi.api.login.postSendOtp,
             data: {
-                tenant: tenant,
+                tenantName: tenant,
                 email: email
             },
             callBack: (res) => Helper.toastShow(res.msg),
@@ -84,7 +85,7 @@ const ForgotPass = () => {
             >
                 {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                     <View style={{ marginHorizontal: 10 }}>
-                        <VcCard style={{ gap: 10, paddingTop: 10 }}>
+                        <VcCard style={{ gap: 10, padding: 20 }}>
                             <VcTextInput
                                 label="Mã truy cập"
                                 value={values.tenant}
@@ -105,23 +106,21 @@ const ForgotPass = () => {
                                 textError={errors.email}
                                 icon={(color) => <MaterialIcons name="email" size={20} color={color} />}
                             />
-                            <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginVertical: 20 }}>
+                            <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                                 <Text>Nhập mã OTP</Text>
                                 <VcPress
-                                    onPress={
-                                        () => {
-                                            setTypeSubmit(1);
-                                            handleSubmit();
-                                        }
-                                    }
-                                    title="(Lấy mã OTP)"
-                                />
+                                    onPress={() => {
+                                        setTypeSubmit(1);
+                                        handleSubmit();
+                                    }}
+                                >
+                                    <VcText text='(Lấy mã OTP)' style={{ color: "blue", fontWeight: "bold", textDecorationLine: "underline" }} />
+                                </VcPress>
                             </View>
                             <OTPTextView
                                 defaultValue={values.otp}
                                 handleTextChange={handleChange('otp')}
                                 // ref={inputOtp}
-                                containerStyle={{ marginHorizontal: 20 }}
                                 textInputStyle={{
                                     borderColor: VcConstant.colors.primaryDark,
                                     backgroundColor: "#fff",
@@ -135,6 +134,8 @@ const ForgotPass = () => {
                                 tintColor={VcConstant.colors.primaryDark}
                             />
                             <VcPress title="Lấy lại mật khẩu"
+                                skin='primary'
+                                style={{ width: 200, alignSelf: "center" }}
                                 onPress={() => {
                                     setTypeSubmit(0);
                                     handleSubmit();

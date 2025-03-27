@@ -3,7 +3,7 @@ import { Helper } from "./helper";
 import { useLogin } from "./hooks/useLogin";
 const { getLinkApi, getToken, getTenant, getOrdCode } = useLogin();
 const vcAxios = axios.create(
-    // { baseURL: VcApi.urlBase }
+    { validateStatus: () => true } // chấp nhận các cuộc gọi đến HTTP://
 );
 // Add a request interceptor
 vcAxios.interceptors.request.use(async (config) => {

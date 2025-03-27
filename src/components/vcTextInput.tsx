@@ -29,9 +29,9 @@ const VcTextInput = ({
     return (
         <View style={[styles.container, { borderColor: color, backgroundColor: disable ? VcConstant.colors.grayLight : "#fff" }, style]}>
             {icon && icon(color)}
-            {label && <Text style={[styles.label, { borderColor: color }]}>
+            {label && <Text style={[styles.label, { backgroundColor: color, borderColor: color }]}>
                 {label}
-                {textError && <Text style={[styles.txtError, { color: color }]}> {textError}</Text>}
+                {textError && <Text style={[styles.txtError]}> {" > " + textError}</Text>}
             </Text>}
             <TextInput
                 style={[styles.input, heightStyle] as any}
@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: -15,
         left: 10,
-        backgroundColor: "#fff",
+        color: "#fff",
+        // backgroundColor: "#fff",
         paddingHorizontal: 10,
         borderTopLeftRadius: 6,
         borderBottomLeftRadius: 6,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     },
     txtError: {
         fontSize: 10,
-        color: VcConstant.colors.gray
+        color: "#fff"
     }
 })
 

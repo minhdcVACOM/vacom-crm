@@ -56,8 +56,10 @@ const VcDrawerContent = (props: any) => {
     }, []);
     const clickLogout = useCallback(() => {
         showPopup({
-            message: "Bạn có muốn thoát không?",
+            message: "Bạn có muốn đăng xuất không?",
             iconType: "question",
+            confirmText: "Đăng xuất",
+            cancelText: "Không",
             onConfirm: () => router.replace('/login'),
             showCancel: true
         });
@@ -126,10 +128,9 @@ const VcDrawerContent = (props: any) => {
                     style={{ flex: 1 }}
                 />
                 <VcDrawerItem
-                    label="Thoát"
-                    setIcon={({ size, color }) => (<AntDesign name="logout" size={size} color={color} />)}
+                    label=""
+                    setIcon={({ size, color }) => (<AntDesign name="logout" size={size} color={VcConstant.colors.purple} />)}
                     onPress={clickLogout}
-                    style={{ flex: 1 }}
                 />
             </View>
         </View>

@@ -18,6 +18,7 @@ export const getApi = async (params: IParams) => {
         .then((res: any) => {
             if (res.error) {
                 Helper.showError(res.error);
+                if (callError) callError(res)
                 return;
             }
             callBack && callBack(res)
@@ -35,11 +36,13 @@ export const postApi = async (params: IParams) => {
         .then((res: any) => {
             if (res.error) {
                 Helper.showError(res.error);
+                if (callError) callError(res)
                 return;
             }
             callBack && callBack(res)
         })
         .catch(error => {
+            console.log("1. chạy lỗi ở đây >>");
             if (callError) callError(error)
             Helper.toastShow(JSON.stringify(error), true);
         })
@@ -52,6 +55,7 @@ export const putApi = async (params: IParams) => {
         .then((res: any) => {
             if (res.error) {
                 Helper.showError(res.error);
+                if (callError) callError(res)
                 return;
             }
             callBack && callBack(res)
@@ -69,6 +73,7 @@ export const deleteApi = async (params: IParams) => {
         .then((res: any) => {
             if (res.error) {
                 Helper.showError(res.error);
+                if (callError) callError(res)
                 return;
             }
             callBack && callBack(res)
@@ -118,10 +123,6 @@ export const apiLogin = (params: IDataLogin) => {
                 config: config,
                 callBack: (res) => {
                     setLoading(false);
-                    if (res.error) {
-                        Helper.toastShow("Sai tên truy cập hoặc mật khẩu!", true);
-                        return;
-                    }
                     const login: ILogin = {
                         tenantId: tenantId,
                         tenant: tenant,
@@ -135,7 +136,13 @@ export const apiLogin = (params: IDataLogin) => {
                     saveInfoLogin(login);
                     return callBack && callBack(login);
                 },
-                callError: (e) => setLoading(false)
+                callError: (error) => {
+                    setLoading(false)
+                    if (error.error) {
+                        Helper.toastShow("Sai tên truy cập hoặc mật khẩu!", true);
+                        return;
+                    }
+                }
             })
         }
     })
